@@ -26,7 +26,7 @@ permissions:
   contents: write
 
 env:
-  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'RyanYuuki/AnymeX' }}
+  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'Shebyyy/AnymeX' }}
 
 jobs:
   check-tag:

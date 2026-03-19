@@ -8,7 +8,7 @@ on:
 env:
   FLUTTER_VERSION: "3.32.8"
   ZSIGN_VERSION: "0.7"
-  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'RyanYuuki/AnymeX' }}
+  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'Shebyyy/AnymeX' }}
 
 jobs:
   build-all-platforms:
