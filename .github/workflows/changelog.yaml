@@ -25,6 +25,9 @@ on:
 permissions:
   contents: write
 
+env:
+  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'RyanYuuki/AnymeX' }}
+
 jobs:
   check-tag:
     runs-on: ubuntu-latest
@@ -237,7 +240,7 @@ jobs:
           [ -n "$CHORES" ] && echo -e "### 🧹 Chores & Documentation\n$CHORES\n" >> CHANGELOG.md
 
           CURRENT_TAG_SAFE=$(echo "${{ env.current_tag }}" | sed 's/[^a-zA-Z0-9.-]//g')
-          echo "![Total Downloads](https://img.shields.io/github/downloads/RyanYuuki/AnymeX/total?style=for-the-badge&label=TOTAL%20DOWNLOADS&labelColor=black&color=white) ![Current Release](https://img.shields.io/github/downloads/RyanYuuki/AnymeX/${CURRENT_TAG_SAFE}/total?style=for-the-badge&label=CURRENT%20RELEASE&labelColor=black&color=white)" >> CHANGELOG.md
+          echo "![Total Downloads](https://img.shields.io/github/downloads/${MAIN_SOURCE_REPO}/total?style=for-the-badge&label=TOTAL%20DOWNLOADS&labelColor=black&color=white) ![Current Release](https://img.shields.io/github/downloads/${MAIN_SOURCE_REPO}/${CURRENT_TAG_SAFE}/total?style=for-the-badge&label=CURRENT%20RELEASE&labelColor=black&color=white)" >> CHANGELOG.md
         shell: /usr/bin/bash -e {0}
 
       - name: Debug CHANGELOG.md
@@ -352,8 +355,8 @@ jobs:
           echo "════════════════════════════════════════════"
           echo "  Cloning Main Repository for Commits"
           echo "════════════════════════════════════════════"
-          git clone https://github.com/RyanYuuki/AnymeX.git main-repo
-          echo "✅ Cloned RyanYuuki/AnymeX to main-repo/"
+          git clone "https://github.com/${MAIN_SOURCE_REPO}.git" main-repo
+          echo "✅ Cloned ${MAIN_SOURCE_REPO} to main-repo/"
 
       - name: Read Last Beta Commit
         id: get_last_commit
@@ -435,8 +438,8 @@ jobs:
         run: |
           echo "Categorizing commits..."
           FEATURES=""; BUG_FIXES=""; REFACTORS=""; STYLE_CHANGES=""; PERFORMANCE=""; CHORES=""
-          REPO_URL="https://github.com/RyanYuuki/AnymeX"
-          MAIN_REPO="RyanYuuki/AnymeX"
+          REPO_URL="https://github.com/${MAIN_SOURCE_REPO}"
+          MAIN_REPO="${MAIN_SOURCE_REPO}"
 
           get_author_username() {
             local commit_sha="$1"
@@ -512,7 +515,7 @@ jobs:
           } > CHANGELOG-BETA.md
 
           CURRENT_TAG_SAFE=$(echo "${{ needs.check-tag.outputs.current_tag }}" | sed 's/[^a-zA-Z0-9.-]//g')
-          echo "![Total Downloads](https://img.shields.io/github/downloads/Shebyyy/AnymeX-Preview/total?style=for-the-badge&label=TOTAL%20DOWNLOADS&labelColor=black&color=white) ![Beta Release](https://img.shields.io/github/downloads/Shebyyy/AnymeX-Preview/${CURRENT_TAG_SAFE}/total?style=for-the-badge&label=BETA%20RELEASE&labelColor=black&color=white)" >> CHANGELOG-BETA.md
+          echo "![Total Downloads](https://img.shields.io/github/downloads/${{ github.repository }}/total?style=for-the-badge&label=TOTAL%20DOWNLOADS&labelColor=black&color=white) ![Beta Release](https://img.shields.io/github/downloads/${{ github.repository }}/${CURRENT_TAG_SAFE}/total?style=for-the-badge&label=BETA%20RELEASE&labelColor=black&color=white)" >> CHANGELOG-BETA.md
         shell: /usr/bin/bash -e {0}
 
       - name: Debug CHANGELOG-BETA.md

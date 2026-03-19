@@ -48,6 +48,7 @@ on:
 env:
   FLUTTER_VERSION: "3.32.8"
   ZSIGN_VERSION: "0.7"
+  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'RyanYuuki/AnymeX' }}
 
 jobs:
 
@@ -164,8 +165,8 @@ jobs:
           echo "════════════════════════════════════════════"
           echo "  Cloning Main Repository"
           echo "════════════════════════════════════════════"
-          git clone https://github.com/RyanYuuki/AnymeX.git main-repo
-          echo "✅ Cloned RyanYuuki/AnymeX to main-repo/"
+          git clone "https://github.com/${MAIN_SOURCE_REPO}.git" main-repo
+          echo "✅ Cloned ${MAIN_SOURCE_REPO} to main-repo/"
 
       # ── Merge PRs ────────────────────────────
       - name: Merge Pull Requests
@@ -890,7 +891,7 @@ jobs:
               PR_DATA=$(curl -s \
                 -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                 -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/RyanYuuki/AnymeX/pulls/$PR")
+                "https://api.github.com/repos/${MAIN_SOURCE_REPO}/pulls/$PR")
               PR_TITLE=$(echo "$PR_DATA" | jq -r '.title // "Unknown"')
               PR_DISPLAY=$(printf '%s\n• #%s - %s' "$PR_DISPLAY" "$PR" "$PR_TITLE")
             done
@@ -1144,7 +1145,7 @@ jobs:
               PR_DATA=$(curl -s \
                 -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                 -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/repos/RyanYuuki/AnymeX/pulls/$PR")
+                "https://api.github.com/repos/${MAIN_SOURCE_REPO}/pulls/$PR")
               PR_TITLE=$(echo "$PR_DATA" | jq -r '.title // "Unknown"')
               PR_DISPLAY+=$'\n'"• #${PR} - ${PR_TITLE}"
             done

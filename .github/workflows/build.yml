@@ -8,6 +8,7 @@ on:
 env:
   FLUTTER_VERSION: "3.32.8"
   ZSIGN_VERSION: "0.7"
+  MAIN_SOURCE_REPO: ${{ vars.MAIN_SOURCE_REPO || 'RyanYuuki/AnymeX' }}
 
 jobs:
   build-all-platforms:
@@ -39,8 +40,8 @@ jobs:
           echo "════════════════════════════════════════════"
           echo "  Cloning Main Repository"
           echo "════════════════════════════════════════════"
-          git clone --depth 1 https://github.com/RyanYuuki/AnymeX.git main-repo
-          echo "✅ Cloned RyanYuuki/AnymeX to main-repo/"
+          git clone --depth 1 "https://github.com/${MAIN_SOURCE_REPO}.git" main-repo
+          echo "✅ Cloned ${MAIN_SOURCE_REPO} to main-repo/"
           ls -la main-repo/
       
       - name: Copy Beta Assets to Main Repo

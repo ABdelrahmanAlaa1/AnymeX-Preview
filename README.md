@@ -32,6 +32,22 @@ Beta builds are automatically generated from the main repository with a few key 
 
 ---
 
+## Fork Setup (important)
+
+If you fork this repository and run the workflows in your own repo:
+
+1. **You do not need to rename workflow secrets.**  
+   Keep the same secret names used in `.github/workflows/*.yml` (for example: signing keys, API keys, webhook tokens).
+2. **Set a repository variable** named `MAIN_SOURCE_REPO` to the main app source repo you want to build from (format: `owner/repo`).  
+   - Default is `RyanYuuki/AnymeX` if the variable is not set.
+3. Workflows that use `${{ github.repository }}` already point to your fork automatically for releases, tags, and artifacts.
+
+> [!TIP]
+> In your fork, go to **Settings → Secrets and variables → Actions → Variables** and add:
+> - `MAIN_SOURCE_REPO=owner/repo`
+
+---
+
 ## Downloads
 
 | Channel | Description | Link |
